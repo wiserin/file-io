@@ -11,10 +11,10 @@ namespace wiseio {
 bool Stream::ORead(const char* path) {
     fd_ = open(path, O_RDONLY);
     if (fd_ < 0) {
-        logger.Error("Ошибка при открытии файла");
+        logger_.Error("Ошибка при открытии файла");
         return false;
     } else {
-        logger.Debug("Файл открыт в режиме OR");
+        logger_.Debug("Файл открыт в режиме OR");
         return true;
     }
 }
@@ -23,10 +23,10 @@ bool Stream::ORead(const char* path) {
 bool Stream::OWrite(const char* path) {
     fd_ = open(path, O_WRONLY | O_CREAT, 0666);
     if (fd_ < 0) {
-        logger.Error("Ошибка при открытии файла");
+        logger_.Error("Ошибка при открытии файла");
         return false;
     } else {
-        logger.Debug("Файл открыт в режиме OW");
+        logger_.Debug("Файл открыт в режиме OW");
         return true;
     }
 }
@@ -35,10 +35,10 @@ bool Stream::OWrite(const char* path) {
 bool Stream::OAppend(const char* path) {
     fd_ = open(path, O_WRONLY | O_APPEND | O_CREAT, 0666);
     if (fd_ < 0) {
-        logger.Error("Ошибка при открытии файла");
+        logger_.Error("Ошибка при открытии файла");
         return false;
     } else {
-        logger.Debug("Файл открыт в режиме OA");
+        logger_.Debug("Файл открыт в режиме OA");
         return true;
     }
 }

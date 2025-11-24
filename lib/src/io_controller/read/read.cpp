@@ -25,7 +25,7 @@ ssize_t Stream::Read(IOBuffer& buffer, size_t offset) {
     if (is_eof_) {
         return 0;
     } else if (buffer.GetBufferSize() < buffer_size_) {
-        logger.Exception("Размер временного буфера не может быть меньше заданного");
+        logger_.Exception("Размер временного буфера не может быть меньше заданного");
     }
     ssize_t len =  Read(buffer.GetDataPtr(), offset);
     if (len >= 0) {

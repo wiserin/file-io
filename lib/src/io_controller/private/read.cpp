@@ -18,13 +18,13 @@ ssize_t Stream::Read(uint8_t* buffer, size_t offset) {
             break;
         } else if (c_bytes == 0) {
             is_eof_ = true;
-            logger.Debug("Достигнут конец файла");
+            logger_.Debug("Достигнут конец файла");
             break;
         } else if (c_bytes < 0) {
             if (errno == EINTR) {
                 continue;
             }
-            logger.Error("Ошибка при чтении файла");
+            logger_.Error("Ошибка при чтении файла");
             return -1;
         } else {
             count += c_bytes;
@@ -46,13 +46,13 @@ ssize_t Stream::CRead(uint8_t* buffer) {
             break;
         } else if (c_bytes == 0) {
             is_eof_ = true;
-            logger.Debug("Достигнут конец файла");
+            logger_.Debug("Достигнут конец файла");
             break;
         } else if (c_bytes < 0) {
             if (errno == EINTR) {
                 continue;
             }
-            logger.Error("Ошибка при чтении файла");
+            logger_.Error("Ошибка при чтении файла");
             return -1;
         } else {
             count += c_bytes;
@@ -75,13 +75,13 @@ ssize_t Stream::CustomRead(uint8_t* buffer, size_t offset, size_t buffer_size) {
             break;
         } else if (c_bytes == 0) {
             is_eof_ = true;
-            logger.Debug("Достигнут конец файла");
+            logger_.Debug("Достигнут конец файла");
             break;
         } else if (c_bytes < 0) {
             if (errno == EINTR) {
                 continue;
             }
-            logger.Error("Ошибка при чтении файла");
+            logger_.Error("Ошибка при чтении файла");
             return -1;
         } else {
             count += c_bytes;

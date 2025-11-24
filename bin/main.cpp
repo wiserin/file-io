@@ -12,7 +12,7 @@ int main() {
 
     wiseio::Stream file {"test.txt", wiseio::OpenMode::kRead};
 
-    wiseio::Stream out_file ("out.txt", wiseio::OpenMode::kAppend);
+    wiseio::Stream out_file ("out.txt", wiseio::OpenMode::kWrite);
 
     std::vector<uint8_t> buffer;
 
@@ -20,11 +20,17 @@ int main() {
     buffer.reserve(1);
 
     int state = file.Read(buffer);
+
+    wiseio::IOBuffer out_buff{};
+
+    out_buff.Add(buffer);
+
+    out_file.CustomWrite(out_buff, 1);
     
-    out_file.Write(buffer);
-    out_file.Write(buffer);
+    // out_file.Write(buffer);
+    // out_file.Write(buffer);
 
 
-    std::string text(buffer.begin(), buffer.end());
-    std::cout << text << std::endl;
+    // std::string text(buffer.begin(), buffer.end());
+    // std::cout << text << std::endl;
 }

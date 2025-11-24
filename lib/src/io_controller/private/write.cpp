@@ -7,7 +7,7 @@
 
 namespace wiseio {
 
-bool Stream::AWrite(uint8_t* buffer, size_t buffer_size) {
+bool Stream::AWrite(const uint8_t* buffer, size_t buffer_size) {
     size_t written = 0;
 
     while (written < buffer_size) {
@@ -17,7 +17,7 @@ bool Stream::AWrite(uint8_t* buffer, size_t buffer_size) {
             if (errno == EINTR) {
                 continue;
             }
-            logger.Error("Ошибка записи в файл");
+            logger_.Error("Ошибка записи в файл");
             return false;
         }
         written += res;
@@ -27,7 +27,7 @@ bool Stream::AWrite(uint8_t* buffer, size_t buffer_size) {
 }
 
 
-bool Stream::CustomWrite(uint8_t* buffer, size_t offset, size_t buffer_size) {
+bool Stream::CustomWrite(const uint8_t* buffer, size_t offset, size_t buffer_size) {
     size_t written = 0;
 
     while (written < buffer_size) {
@@ -37,7 +37,7 @@ bool Stream::CustomWrite(uint8_t* buffer, size_t offset, size_t buffer_size) {
             if (errno == EINTR) {
                 continue;
             }
-            logger.Error("Ошибка записи в файл");
+            logger_.Error("Ошибка записи в файл");
             return false;
         }
         written += res;
