@@ -1,0 +1,61 @@
+#include <cstddef>
+#include <unistd.h>
+#include <fcntl.h>
+
+#include "wise-io/stream.hpp"
+#include "wise-io/schemas.hpp"
+
+
+namespace wiseio {
+
+bool Stream::ORead(const char* path) {
+    fd_ = open(path, O_RDONLY);
+    if (fd_ < 0) {
+        logger.Error("Ошибка при открытии файла");
+        return false;
+    } else {
+        logger.Debug("Файл открыт в режиме OR");
+        return true;
+    }
+}
+
+
+bool Stream::OWrite(const char* path) {
+    fd_ = open(path, O_WRONLY | O_CREAT, 0666);
+    if (fd_ < 0) {
+        logger.Error("Ошибка при открытии файла");
+        return false;
+    } else {
+        logger.Debug("Файл открыт в режиме OW");
+        return true;
+    }
+}
+
+
+bool Stream::OAppend(const char* path) {
+    fd_ = open(path, O_WRONLY | O_APPEND | O_CREAT, 0666);
+    if (fd_ < 0) {
+        logger.Error("Ошибка при открытии файла");
+        return false;
+    } else {
+        logger.Debug("Файл открыт в режиме OA");
+        return true;
+    }
+}
+
+
+bool Stream::Open(const char* path, OpenMode mode) {
+    switch (mode) {
+        case (OpenMode::kRead) : {
+            return ORead(path);
+        }
+        case (OpenMode::kWrite) : {
+            return OWrite(path);
+        }
+        case (OpenMode::kAppend) : {
+            return OAppend(path);
+        }
+    }
+}
+
+} // namespace wiseio

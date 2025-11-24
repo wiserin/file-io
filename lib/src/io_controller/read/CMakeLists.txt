@@ -1,0 +1,7 @@
+set(WISEIO_STREAM_READ_SRC
+    ${CMAKE_CURRENT_SOURCE_DIR}/cread.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/read.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/custom_read.cpp)
+
+
+target_sources(WiseIOLib PRIVATE ${WISEIO_STREAM_READ_SRC})

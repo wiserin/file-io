@@ -1,0 +1,5 @@
+set(WISEIO_STREAM_WRITE_SRC
+    ${CMAKE_CURRENT_SOURCE_DIR}/stream.cpp)
+
+
+target_sources(WiseIOLib PRIVATE ${WISEIO_STREAM_WRITE_SRC})
