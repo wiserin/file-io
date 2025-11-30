@@ -17,7 +17,7 @@ class IOBuffer {
     size_t cursor_;
 
  public:
-    IOBuffer(size_t buffer_size = 4096);
+    IOBuffer(size_t buffer_size);
 
     IOBuffer() = default;
     IOBuffer(IOBuffer&& buffer);
@@ -56,7 +56,7 @@ class Stream {
     bool OAppend(const char* path);
     bool ReadAndWrite(const char* path);
 
-    bool Open(const char* path, OpenMode mode);
+    bool Open(const char* path);
 
     ssize_t Read(uint8_t* buffer, size_t offset);
     ssize_t CRead(uint8_t* buffer);
@@ -70,11 +70,7 @@ class Stream {
     Stream(Stream&& stream) = default;
     Stream& operator=(Stream&& stream) = default;
 
-    Stream(
-        const char* file_path,
-        OpenMode mode,
-        uint64_t buffer_size = 4096);
-    
+    Stream(OpenMode mode, uint64_t buffer_size);
 
     ssize_t Read(std::vector<uint8_t>& buffer, size_t offset = 0);
     ssize_t Read(IOBuffer& buffer, size_t offset = 0);
@@ -88,8 +84,13 @@ class Stream {
     bool CustomWrite(const std::vector<uint8_t>& buffer, size_t offset);
     bool CustomWrite(const IOBuffer& buffer, size_t offset);
 
+    friend Stream CreateStream(const char* name, OpenMode mode, uint64_t buffer_size);
+
     ~Stream();
 };
+
+
+Stream CreateStream(const char* name, OpenMode mode, uint64_t buffer_size = 4096);
 
 
 } // namespace wiseio

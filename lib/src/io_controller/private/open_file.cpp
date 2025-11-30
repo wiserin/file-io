@@ -56,8 +56,8 @@ bool Stream::ReadAndWrite(const char* path) {
 }
 
 
-bool Stream::Open(const char* path, OpenMode mode) {
-    switch (mode) {
+bool Stream::Open(const char* path) {
+    switch (mode_) {
         case (OpenMode::kRead) : {
             return ORead(path);
         }
