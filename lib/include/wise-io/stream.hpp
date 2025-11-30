@@ -63,6 +63,7 @@ class Stream {
     ssize_t CustomRead(uint8_t* buffer, size_t offset, size_t buffer_size);
 
     bool AWrite(const uint8_t* buffer, size_t buffer_size);
+    bool CWrite(const uint8_t* buffer, size_t buffer_size);
     bool CustomWrite(const uint8_t* buffer, size_t offset, size_t buffer_size);
 
  public:
@@ -81,6 +82,8 @@ class Stream {
 
     bool AWrite(const std::vector<uint8_t>& buffer);
     bool AWrite(const IOBuffer& buffer);
+    bool CWrite(const std::vector<uint8_t>& buffer);
+    bool CWrite(const IOBuffer& buffer);
     bool CustomWrite(const std::vector<uint8_t>& buffer, size_t offset);
     bool CustomWrite(const IOBuffer& buffer, size_t offset);
 

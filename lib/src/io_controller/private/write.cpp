@@ -27,6 +27,28 @@ bool Stream::AWrite(const uint8_t* buffer, size_t buffer_size) {
 }
 
 
+bool Stream::CWrite(const uint8_t* buffer, size_t buffer_size) {
+    size_t written = 0;
+
+    while (written < buffer_size) {
+        ssize_t res = pwrite(fd_, buffer + written, buffer_size - written, cursor_ + written);
+
+        if (res < 0) {
+            if (errno == EINTR) {
+                continue;
+            }
+            logger_.Error("Ошибка записи в файл");
+            return false;
+        }
+        written += res;
+    }
+
+    cursor_ += written;
+
+    return true;
+}
+
+
 bool Stream::CustomWrite(const uint8_t* buffer, size_t offset, size_t buffer_size) {
     size_t written = 0;
 
