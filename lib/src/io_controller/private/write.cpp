@@ -1,4 +1,5 @@
 #include <cstddef>
+#include <string>
 #include <unistd.h>
 #include <fcntl.h>
 
@@ -17,7 +18,7 @@ bool Stream::AWrite(const uint8_t* buffer, size_t buffer_size) {
             if (errno == EINTR) {
                 continue;
             }
-            logger_.Error("Ошибка записи в файл");
+            logger_.Error("Ошибка записи в файл. Errno: " + std::to_string(errno));
             return false;
         }
         written += res;
@@ -37,7 +38,7 @@ bool Stream::CWrite(const uint8_t* buffer, size_t buffer_size) {
             if (errno == EINTR) {
                 continue;
             }
-            logger_.Error("Ошибка записи в файл");
+            logger_.Error("Ошибка записи в файл. Errno: " + std::to_string(errno));
             return false;
         }
         written += res;
@@ -59,7 +60,7 @@ bool Stream::CustomWrite(const uint8_t* buffer, size_t offset, size_t buffer_siz
             if (errno == EINTR) {
                 continue;
             }
-            logger_.Error("Ошибка записи в файл");
+            logger_.Error("Ошибка записи в файл. Errno: " + std::to_string(errno));
             return false;
         }
         written += res;

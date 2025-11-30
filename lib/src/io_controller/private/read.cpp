@@ -24,7 +24,7 @@ ssize_t Stream::Read(uint8_t* buffer, size_t offset) {
             if (errno == EINTR) {
                 continue;
             }
-            logger_.Error("Ошибка при чтении файла");
+            logger_.Error("Ошибка при чтении файла Errno: " + std::to_string(errno));
             return -1;
         } else {
             count += c_bytes;
@@ -52,7 +52,7 @@ ssize_t Stream::CRead(uint8_t* buffer) {
             if (errno == EINTR) {
                 continue;
             }
-            logger_.Error("Ошибка при чтении файла");
+            logger_.Error("Ошибка при чтении файла Errno: " + std::to_string(errno));
             return -1;
         } else {
             count += c_bytes;
@@ -81,7 +81,7 @@ ssize_t Stream::CustomRead(uint8_t* buffer, size_t offset, size_t buffer_size) {
             if (errno == EINTR) {
                 continue;
             }
-            logger_.Error("Ошибка при чтении файла");
+            logger_.Error("Ошибка при чтении файла Errno: " + std::to_string(errno));
             return -1;
         } else {
             count += c_bytes;
