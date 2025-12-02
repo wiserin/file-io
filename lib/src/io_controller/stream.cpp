@@ -1,8 +1,6 @@
-#include <algorithm>
-#include <chrono>
+#include <cstddef>
 #include <cstdint>
 #include <stdexcept>
-#include <type_traits>
 #include <unistd.h>
 #include <utility>
 
@@ -47,6 +45,15 @@ Stream& Stream::operator=(Stream&& another) {
     another.fd_ = -1;
     
     return *this;
+}
+
+void Stream::SetCursor(size_t position) {
+    cursor_ = position;
+}
+
+
+bool Stream::IsEOF() {
+    return is_eof_;
 }
 
 

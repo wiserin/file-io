@@ -90,6 +90,9 @@ class Stream {
     bool CustomWrite(const std::vector<uint8_t>& buffer, size_t offset);
     bool CustomWrite(const IOBuffer& buffer, size_t offset);
 
+    void SetCursor(size_t position);
+    bool IsEOF();
+
     void Close();
 
     friend Stream CreateStream(const char* name, OpenMode mode, uint64_t buffer_size);

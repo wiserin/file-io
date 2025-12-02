@@ -1,4 +1,4 @@
-add_executable(${PROJECT_NAME} main.cpp)
+add_executable(main main.cpp)
 
-target_link_libraries(${PROJECT_NAME} PRIVATE logging)
-target_link_libraries(${PROJECT_NAME} PRIVATE WiseIOLib)
+target_link_libraries(main PRIVATE WiseLogging)
+target_link_libraries(main PRIVATE WiseIO)

@@ -1,4 +1,3 @@
-#include <compare>
 #include <iostream>
 #include <sys/types.h>
 #include <vector>
@@ -16,11 +15,17 @@ int main() {
 
     wiseio::Stream file = wiseio::CreateStream("test2.txt", wiseio::OpenMode::kReadAndWrite);
 
-    std::vector<uint8_t> init_data = kMagicBytes;
-    init_data.resize(init_data.size() + 8, 0);
+    // std::vector<uint8_t> init_data = kMagicBytes;
+    // init_data.resize(init_data.size() + 8, 0);
+
+    std::vector<uint8_t> load_buffer;
+    load_buffer.reserve(4095);
+    file.CRead(load_buffer);
+    file.CWrite(load_buffer);
+    std::cout << "Size: " << load_buffer.size() << std::endl;
 
     // std::vector<uint8_t> buffer {'x', 'a', 'a', 'a'};
-    file.CWrite(init_data);
+    // file.CWrite(init_data);
 }
 
     // wiseio::Stream out_file = wiseio::CreateStream("out.txt", wiseio::OpenMode::kWrite);

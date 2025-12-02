@@ -2,4 +2,4 @@ set(WISEIO_BUFFER_SRC
     ${CMAKE_CURRENT_SOURCE_DIR}/buffer.cpp)
 
 
-target_sources(WiseIOLib PRIVATE ${WISEIO_BUFFER_SRC})
+target_sources(WiseIO PRIVATE ${WISEIO_BUFFER_SRC})

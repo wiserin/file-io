@@ -4,4 +4,4 @@ set(WISEIO_STREAM_READ_SRC
     ${CMAKE_CURRENT_SOURCE_DIR}/custom_read.cpp)
 
 
-target_sources(WiseIOLib PRIVATE ${WISEIO_STREAM_READ_SRC})
+target_sources(WiseIO PRIVATE ${WISEIO_STREAM_READ_SRC})

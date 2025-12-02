@@ -1,5 +1,12 @@
 cmake_minimum_required(VERSION 3.12)
 
+include(FetchContent)
+FetchContent_Declare(
+    WiseLogging
+    GIT_REPOSITORY https://github.com/wiserin/CPP-logging.git
+    GIT_TAG v1.0.1
+)
+FetchContent_MakeAvailable(WiseLogging)
 
 project(
     WiseIO
@@ -10,7 +17,5 @@ project(
 
 set(CMAKE_CXX_STANDARD 23)
 
-add_subdirectory(bin)
 add_subdirectory(lib)
-add_subdirectory(logging)
 

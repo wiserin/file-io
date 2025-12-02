@@ -1,8 +1,8 @@
-add_library(WiseIOLib STATIC)
+add_library(WiseIO SHARED)
 
-target_include_directories(WiseIOLib PUBLIC include/)
+target_include_directories(WiseIO PUBLIC include/)
 
 add_subdirectory(src)
 
-target_link_libraries(WiseIOLib PRIVATE logging)
+target_link_libraries(WiseIO PRIVATE WiseLogging)
 
