@@ -39,7 +39,7 @@ include(FetchContent)
 
 FetchContent_Declare(
     WiseIO
-    GIT_REPOSITORY https://github.com/yourusername/WiseIO.git
+    GIT_REPOSITORY https://github.com/yourusername/file-io.git
     GIT_TAG v1.0.0
 )
 
@@ -51,8 +51,8 @@ target_link_libraries(your_target PRIVATE WiseIO)
 ### Manual Installation
 
 ```bash
-git clone https://github.com/yourusername/WiseIO.git
-cd WiseIO
+git clone https://github.com/yourusername/file-io.git
+cd file-io
 mkdir build && cd build
 cmake ..
 cmake --build .
@@ -650,7 +650,7 @@ void patch_file(const char* filename, size_t offset,
 
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/WiseIO.git
+git clone https://github.com/yourusername/file-io.git
 cd WiseIO
 
 # Create build directory
@@ -869,4 +869,4 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## Contact
 
 **Author**: wiserin  
-**Issues**: [https://github.com/wiserin/WiseIO/issues](https://github.com/wiserin/WiseIO/issues)
+**Issues**: [https://github.com/wiserin/file-io/issues](https://github.com/wiserin/file-io/issues)
