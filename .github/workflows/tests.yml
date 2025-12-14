@@ -1,0 +1,106 @@
+name: Tests
+
+on:
+  push:
+    branches: [ dev ]
+  pull_request:
+    branches: [ dev ]
+
+jobs:
+  test:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+        build_type: [Debug, Release]
+        
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Install dependencies (Ubuntu)
+      if: runner.os == 'Linux'
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y cmake g++ lcov
+    
+    - name: Install dependencies (macOS)
+      if: runner.os == 'macOS'
+      run: |
+        brew install cmake lcov
+    
+    - name: Create Build Directory
+      run: mkdir build
+    
+    - name: Configure CMake
+      run: |
+        cd build
+        if [ "${{ matrix.build_type }}" == "Debug" ]; then
+          cmake -DCMAKE_BUILD_TYPE=Debug \
+                -DCMAKE_CXX_FLAGS="--coverage" \
+                ..
+        else
+          cmake -DCMAKE_BUILD_TYPE=${{ matrix.build_type }} ..
+        fi
+    
+    - name: Build
+      run: |
+        cd build
+        cmake --build . --config ${{ matrix.build_type }} -j4
+    
+    - name: Run Tests
+      run: |
+        cd build/tests
+        ./wiseio_tests --gtest_output=xml:test_results.xml
+    
+    - name: Generate Coverage Report (Debug only)
+      if: matrix.build_type == 'Debug' && runner.os == 'Linux'
+      run: |
+        cd build
+        lcov --capture --directory . --output-file coverage.info
+        lcov --remove coverage.info '/usr/*' '*/tests/*' '*/googletest/*' --output-file coverage_filtered.info
+        lcov --list coverage_filtered.info
+    
+    - name: Upload Coverage to Codecov
+      if: matrix.build_type == 'Debug' && runner.os == 'Linux'
+      uses: codecov/codecov-action@v3
+      with:
+        files: build/coverage_filtered.info
+        fail_ci_if_error: false
+    
+    - name: Upload Test Results
+      if: always()
+      uses: actions/upload-artifact@v3
+      with:
+        name: test-results-${{ matrix.os }}-${{ matrix.build_type }}
+        path: build/tests/test_results.xml
+
+  # Дополнительная проверка на санитайзеры
+  sanitizers:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        sanitizer: [address, undefined, thread]
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Install dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y cmake g++
+    
+    - name: Build with ${{ matrix.sanitizer }} sanitizer
+      run: |
+        mkdir build
+        cd build
+        cmake -DCMAKE_BUILD_TYPE=Debug \
+              -DCMAKE_CXX_FLAGS="-fsanitize=${{ matrix.sanitizer }} -fno-omit-frame-pointer" \
+              -DCMAKE_EXE_LINKER_FLAGS="-fsanitize=${{ matrix.sanitizer }}" \
+              ..
+        cmake --build .
+    
+    - name: Run Tests
+      run: |
+        cd build/tests
+        ./wiseio_tests

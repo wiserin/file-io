@@ -26,7 +26,7 @@ ssize_t Stream::CustomRead(IOBuffer& buffer, size_t offset) {
 
     ssize_t len = CustomRead(buffer.GetDataPtr(), offset, buffer.GetBufferSize());
     if (len >= 0) {
-        buffer.SetLen(len);
+        buffer.ResizeBuffer(len);
     }
     return len;
 }

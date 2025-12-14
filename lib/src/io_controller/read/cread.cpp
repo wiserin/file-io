@@ -25,7 +25,7 @@ ssize_t Stream::CRead(IOBuffer& buffer) {
 
     ssize_t len =  CRead(buffer.GetDataPtr(), buffer.GetBufferSize());
     if (len >= 0) {
-        buffer.SetLen(len);
+        buffer.ResizeBuffer(len);
     }
     return len;
 }
