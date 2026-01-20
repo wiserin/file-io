@@ -15,5 +15,12 @@ enum class Encoding {
     kUTF_16
 };
 
+enum class NumSize {
+    kUint8_t = 1,
+    kUint16_t = 2,
+    kUint32_t = 4,
+    kUint64_t = 8,
+};
+
 
 } // namespace wiseio

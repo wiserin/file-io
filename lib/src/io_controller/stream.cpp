@@ -1,11 +1,12 @@
 #include <cstddef>  // Copyright 2025 wiserin
 #include <stdexcept>
-#include <unistd.h>
+#include <string>
 #include <utility>
 
 #include "wise-io/stream.hpp"
 #include "wise-io/schemas.hpp"
 #include "logging/logger.hpp"
+#include "wise-io/core.hpp"
 
 
 namespace wiseio {
@@ -51,11 +52,6 @@ bool Stream::IsEOF() const {
 }
 
 
-void Stream::Close() {
-    close(fd_);
-}
-
-
 void Stream::FdCheck() const {
     if (fd_ == -1) {
         logger_.Critical("Обращение к файлу через закрытый fd");
@@ -64,8 +60,46 @@ void Stream::FdCheck() const {
 }
 
 
+void Stream::Close() {
+    core::Close(fd_);
+}
+
+
 Stream::~Stream() {
-    Close();
+    core::Close(fd_);
+}
+
+
+bool Stream::Open(const char* path) {
+    fd_ = -1;
+    switch (mode_) {
+        case (OpenMode::kRead) : {
+            fd_ = core::ORead(path);
+            break;
+        }
+        case (OpenMode::kWrite) : {
+            fd_ = core::OWrite(path);
+            break;
+        }
+        case (OpenMode::kAppend) : {
+            fd_ = core::OAppend(path);
+            break;
+        }
+        case (OpenMode::kReadAndWrite) : {
+            fd_ = core::ReadAndWrite(path);
+            break;
+        }
+    }
+
+    if (fd_ > 0) {
+        logger_.Debug("Файл открыт в режиме " + std::to_string(
+            static_cast<int>(mode_)));
+        return true;
+    } else {
+        logger_.Error("Ошибка при открытии файла. FD: " + std::to_string(
+            fd_));
+        return false;
+    }
 }
 
 
